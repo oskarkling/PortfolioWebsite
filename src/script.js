@@ -8,7 +8,7 @@ import * as dat from 'dat.gui'
 
 // Loader
 const textureLoader = new THREE.TextureLoader();
-const normalMapPebblesTexture = textureLoader.load('/Metal_Plate_047_normal.jpg');
+const normalMapPebblesTexture = textureLoader.load('Metal_Plate_047_normal.jpg');
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl');
