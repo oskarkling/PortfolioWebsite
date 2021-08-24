@@ -1,7 +1,7 @@
 import './css/style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import * as dat from 'dat.gui'
+//import * as dat from 'dat.gui'
 
 // Debug -> remove for production build
 //const gui = new dat.GUI();
@@ -145,6 +145,8 @@ scene.add(camera);
 // const controls = new OrbitControls(camera, canvas)
 // controls.enableDamping = true
 
+
+
 /**
  * Renderer
  */
@@ -159,6 +161,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 // Controls
 const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true
 
 /**
  * Animate
@@ -180,9 +183,8 @@ function onDocumentMouseMove(event)
 }
 
 
+// Button functionality
 let gotPower = false;
-
-
 
 document.getElementById("gainPower").addEventListener("click", gainPower, false);
 
@@ -197,6 +199,39 @@ function loosePower()
 {
     gotPower = false;
 }
+
+// star functions
+
+function addStar()
+{
+    const starGeometry = new THREE.SphereGeometry(0.25, 24, 24);
+    const material = new THREE.MeshStandardMaterial( {color: 0xffffff});
+    const star = new THREE.Mesh(starGeometry, material);
+
+    const [x,y,z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+    star.position.set(x,y,z);
+    scene.add(star);
+}
+
+Array(200).fill().forEach(addStar);
+
+// Orbit controls functionality
+
+//const controls = new OrbitControls(camera, renderer.domElement);
+
+
+//move camera
+
+function moveCamera()
+{
+    const t = document.body.getBoundingClientRect().top;
+    camera.position.z = t * -0.01;
+    camera.position.x = t * -0.0002;
+    camera.position.y = t * -0.0002;
+}
+
+document.body.onscroll = moveCamera;
+
 
 const clock = new THREE.Clock();
 
@@ -227,7 +262,7 @@ const tick = () =>
     
 
     // Update Orbital Controls
-    // controls.update()
+    controls.update()
 
     // Render the webgl
     renderer.render(scene, camera);
