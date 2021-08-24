@@ -136,10 +136,17 @@ footer
 
 #buttons
 {
-    grid-column: 2 / 6;    
+    grid-column: 3 / 6;    
 }
 
 .btnyo
 {
     text-align: center;
+}
+
+.game
+{
+    grid-column: 3 / 11;
+    text-align: center;
+
 }
