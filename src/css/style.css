@@ -79,7 +79,7 @@ blockquote
 header 
 {
     background: var(--clr-darkgrey);
-    grid-column: 2 / span 5;
+    grid-column: 2 / span 7;
     font-size: 2.5rem;
     padding: 2rem;
     margin-bottom: var(--space);
@@ -136,7 +136,8 @@ footer
 
 #buttons
 {
-    grid-column: 3 / 6;    
+    grid-column: 9 / 10;
+    text-align: center;
 }
 
 .btnyo
