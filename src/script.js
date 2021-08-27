@@ -31,6 +31,7 @@ material.color = new THREE.Color(0x292929);
 
 // Mesh
 const cube = new THREE.Mesh(geometry,material);
+cube.position.set(0,0,-1);
 scene.add(cube);
 
 // Lights
@@ -191,6 +192,13 @@ document.getElementById("gainPower").addEventListener("click", gainPower, false)
 
 document.getElementById("loosePower").addEventListener("click", loosePower, false);
 
+document.getElementById("resetCube").addEventListener("click", resetCube, false);
+
+function resetCube() {
+    gotPower = false;
+    cube.position.set(0,0,0);
+}
+
 function gainPower()
 {
     gotPower = true;
@@ -210,7 +218,7 @@ const count = 2000
 
 const vertices = new Float32Array(count*3)
 for(let i= 0; i<count*3;i++){
-    vertices[i] = (Math.random()-0.5) * 10
+    vertices[i] = (Math.random()-0.5) * 20
 }
 
 particlesCustomGeometry.setAttribute(
@@ -261,6 +269,7 @@ function moveCamera()
     camera.position.z = t * -0.01;
     camera.position.x = t * -0.0002;
     camera.position.y = t * -0.0002;
+
 }
 
 document.body.onscroll = moveCamera;
