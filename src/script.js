@@ -1,6 +1,7 @@
 import './css/style.css'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { CubeReflectionMapping } from 'three';
 //import * as dat from 'dat.gui'
 
 // Debug -> remove for production build
@@ -138,7 +139,7 @@ window.addEventListener('resize', () =>
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
 camera.position.x = 0;
 camera.position.y = 0;
-camera.position.z = 2;
+camera.position.z = 0;
 scene.add(camera);
 
 // Controls
@@ -201,11 +202,43 @@ function loosePower()
 }
 
 // star functions
+// star with star.png
+const starTexture = textureLoader.load('star.png');
 
+const particlesCustomGeometry = new THREE.BufferGeometry()
+const count = 2000
+
+const vertices = new Float32Array(count*3)
+for(let i= 0; i<count*3;i++){
+    vertices[i] = (Math.random()-0.5) * 10
+}
+
+particlesCustomGeometry.setAttribute(
+    'position', 
+    new THREE.BufferAttribute(vertices,3)
+)
+const particleCustommaterial = new THREE.PointsMaterial({
+    color:'#00F1FF',
+    map:starTexture
+})
+particleCustommaterial.size = 0.1
+particleCustommaterial.sizeAttenuation = true
+particleCustommaterial.transparent = true
+particleCustommaterial.alphaMap = starTexture
+particleCustommaterial.alphaTest = 0.001
+// const mesh = new THREE.Mesh(particlesCustomGeometry,material)
+const customParticles = new THREE.Points(
+    particlesCustomGeometry,
+    particleCustommaterial
+)
+scene.add(customParticles)
+
+
+//star with mesh
 function addStar()
 {
-    const starGeometry = new THREE.SphereGeometry(0.25, 24, 24);
-    const material = new THREE.MeshStandardMaterial( {color: 0xffffff});
+    const starGeometry = new THREE.SphereGeometry(0.11, 12, 12);
+    const material = new THREE.MeshBasicMaterial( {color: 0xffffff});
     const star = new THREE.Mesh(starGeometry, material);
 
     const [x,y,z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
@@ -213,7 +246,7 @@ function addStar()
     scene.add(star);
 }
 
-Array(200).fill().forEach(addStar);
+Array(500).fill().forEach(addStar);
 
 // Orbit controls functionality
 
@@ -257,6 +290,9 @@ const tick = () =>
         cube.rotation.y += 0.5 * (targetX - cube.rotation.y);
         cube.rotation.x += 0.5 * (targetY - cube.rotation.x);
         cube.rotation.z += -0.05 * (targetY - cube.rotation.x);
+
+        cube.position.y += -0.1 * targetY;
+        cube.position.x += 0.1 * targetX;
     }
     
     
