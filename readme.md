@@ -1,10 +1,12 @@
 ``` bash
-# Install dependencies (only the first time)
+#first time use
 npm install
 
-# Run the local server at localhost:8080
+#startinglocal server
 npm run dev
 
-# Build for production in the dist/ directory
+#bundle it
 npm run build
+
+script.js is in work of progress. Thus there is much commented code
 ```
